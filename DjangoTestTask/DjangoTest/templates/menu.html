@@ -2,16 +2,30 @@
 <ul>
     {% for item in menu_items %}
         <li>
-            <a href="{{ item.get_absolute_url }}" class="{% if item.get_absolute_url == current_url %}active{% endif %}">
+            <a href="{{ item.get_absolute_url }}" 
+               class="{% if item in active_items %}active{% endif %}">
                 {{ item.name }}
             </a>
-            {% if item.children.all %}
+            {% if item in active_items or item.children.all %}
                 <ul>
                     {% for child in item.children.all %}
                         <li>
-                            <a href="{{ child.get_absolute_url }}" class="{% if child.get_absolute_url == current_url %}active{% endif %}">
+                            <a href="{{ child.get_absolute_url }}" 
+                               class="{% if child in active_items %}active{% endif %}">
                                 {{ child.name }}
                             </a>
+                            {% if child in active_items %}
+                                <ul>
+                                    {% for grandchild in child.children.all %}
+                                        <li>
+                                            <a href="{{ grandchild.get_absolute_url }}" 
+                                               class="{% if grandchild in active_items %}active{% endif %}">
+                                                {{ grandchild.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </li>
                     {% endfor %}
                 </ul>
