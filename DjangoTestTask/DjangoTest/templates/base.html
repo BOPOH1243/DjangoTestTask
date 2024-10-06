@@ -1,0 +1,16 @@
+{# DjangoTest/templates/base.html #}
+{% load menu_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Menu</title>
+</head>
+<body>
+    <header>
+        {% draw_menu 'main_menu' %}
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
